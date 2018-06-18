@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+
+phases:
+  install:
+    commands:
+  pre_build:
+    commands:
+  build:
+    commands:
+    mvn clean package shade:shade
+  post_build:
+    commands:
+artifacts:
+  files:
+    /codebuild/output/*/src/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+  discard-paths:
+  base-directory:
+cache:
+  paths:
