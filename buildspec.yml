@@ -7,5 +7,6 @@ phases:
       - mvn clean package shade:shade
 artifacts:
   files:
-    - /codebuild/output/*/src/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
-
+    - '*/getCustomerInfo-1.0-SNAPSHOT-shaded.jar'
+  base-directory: codebuild
+  discard-paths: yes
