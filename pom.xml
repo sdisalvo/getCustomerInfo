@@ -38,7 +38,6 @@
     </dependencies>
 
     <build>
-        <directory>target</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -46,6 +45,7 @@
                 <version>2.4.3</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <outputDirectory>.</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
