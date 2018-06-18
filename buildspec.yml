@@ -7,6 +7,5 @@ phases:
       - mvn clean package shade:shade
 artifacts:
   files:
-    - '**/*'
-  base-directory: /src
+    - target/getCustomerInfo-1.0-SNAPSHOT.jar
   discard-paths: yes
