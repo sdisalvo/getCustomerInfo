@@ -8,5 +8,5 @@ phases:
 artifacts:
   files:
     - '*/getCustomerInfo-1.0-SNAPSHOT-shaded.jar'
-  base-directory: codebuild
+  base-directory: /codebuild
   discard-paths: yes
