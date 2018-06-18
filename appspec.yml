@@ -1,6 +1,6 @@
 version: 0.0
 Resources:
-  - myLambdaFunction:
+  - getCustomerInfo:
       Type: AWS::Lambda::Function
       Properties:
         Name: "getCustomerInfo"
