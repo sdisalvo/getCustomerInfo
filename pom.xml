@@ -45,7 +45,6 @@
                 <version>2.4.3</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <outputDirectory>.</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
