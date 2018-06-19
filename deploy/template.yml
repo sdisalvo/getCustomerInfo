@@ -1,4 +1,4 @@
-﻿AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Serverless Specification template describing your function.
 Resources:
@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: sax.lab.aws.lambda.GetCustomerInfoHandler
       Runtime: java8
-      CodeUri: .
+      CodeUri: s3://codepipeline-eu-west-1-378798684257/getCustomerInfoPipel/MyAppBuild/KWhwrKm
       Description: ''
       MemorySize: 512
       Timeout: 15
