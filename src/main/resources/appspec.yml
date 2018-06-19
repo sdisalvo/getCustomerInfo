@@ -1,9 +1,0 @@
-version: 0.0
-Resources:
-  - getCustomerInfo:
-      Type: AWS::Lambda::Function
-      Properties:
-        Name: "getCustomerInfo"
-        Alias: "getCustomerInfo"
-        CurrentVersion: "1"
-        TargetVersion: "1"
