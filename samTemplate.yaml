@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: sax.lab.aws.lambda.GetCustomerInfoHandler
       Runtime: java8
-      CodeUri: getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+      CodeUri: ./
       Description: ''
       MemorySize: 512
       Timeout: 15
