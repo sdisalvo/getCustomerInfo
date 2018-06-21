@@ -7,7 +7,7 @@ phases:
   post_build:
     commands:
       - ls ./target
-      - aws s3 cp ./target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+      - aws s3 cp ./target/getCustomerInfo-1.0-SNAPSHOT.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
 artifacts:
   type: zip
   files:
