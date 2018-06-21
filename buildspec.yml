@@ -4,13 +4,11 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn clean package
-  install:
+  post_build:
     commands:
-      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file outputSamTemplate.yaml
+      - aws s3 target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
 artifacts:
   type: zip
   files:
-    - target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
     - samTemplate.yaml
-    - outputSamTemplate.yaml
   discard-paths: yes
