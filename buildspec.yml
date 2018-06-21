@@ -6,8 +6,8 @@ phases:
       - mvn clean package
   post_build:
     commands:
-      - ls
-      - aws s3 cp target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+      - ls ./target
+      - aws s3 cp ./target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
 artifacts:
   type: zip
   files:
