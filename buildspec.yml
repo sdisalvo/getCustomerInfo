@@ -4,9 +4,6 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn clean package
-  post_build:
-    commands:
-      - aws s3 cp microservice-http-endpoint/target/microservice-http-endpoint-1.0-SNAPSHOT.jar s3://serverless-microservice/microservice-http-endpoint-1.0-SNAPSHOT.jar
 artifacts:
   files:
     - target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
