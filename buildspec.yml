@@ -9,7 +9,6 @@ phases:
       - ls ./target
       - aws s3 cp ./target/getCustomerInfo-1.0-SNAPSHOT.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
 artifacts:
-  type: zip
   files:
-    - samTemplate.yaml
+    - ./target/getCustomerInfo-1.0-SNAPSHOT.jar
   discard-paths: yes
