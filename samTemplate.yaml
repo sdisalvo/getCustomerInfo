@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: sax.lab.aws.lambda.GetCustomerInfoHandler
       Runtime: java8
-      CodeUri: s3://codepipeline-eu-west-1-378798684257/getCustomerInfoPipel/MyAppBuild/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+      CodeUri: target/getCustomerInfo-1.0-SNAPSHOT.jar
       Description: ''
       MemorySize: 512
       Timeout: 15
