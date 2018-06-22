@@ -35,8 +35,7 @@ public class GetCustomerInfoHandler
                 outputStream.write( ("* " + b.getName()).getBytes() );
 
             }
-
-            outputStream.write( "begin".getBytes() );
+            outputStream.write( "begins".getBytes() );
 
             S3Object o = s3.getObject( "sax-image-reko", "GetCustomerInfoHandler.java" );
             S3ObjectInputStream s3is = o.getObjectContent();
