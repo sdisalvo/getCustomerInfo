@@ -8,7 +8,4 @@ phases:
     commands:
       - ls ./target
       - aws s3 cp ./target/getCustomerInfo-1.0-SNAPSHOT.jar s3://sax-deploy/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
-artifacts:
-  files:
-    - samTemplate.yaml
-  discard-paths: yes
+      - aws cloudformation deploy --template-file samTemplate.yaml --stack-name ci-stack --region eu-west-1
