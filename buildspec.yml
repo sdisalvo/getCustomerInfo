@@ -11,5 +11,4 @@ phases:
 artifacts:
   files:
     - samTemplate.yaml
-    - target/getCustomerInfo-1.0-SNAPSHOT.jar
   discard-paths: yes

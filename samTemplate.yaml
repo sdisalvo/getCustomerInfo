@@ -12,3 +12,5 @@ Resources:
       MemorySize: 512
       Timeout: 15
       Role: 'arn:aws:iam::028186001988:role/service-role/readRole'
+    Metadata:
+      Version: 1.0
