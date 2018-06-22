@@ -4,7 +4,10 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn clean package
+  post_build:
+    commands:
+      - ls
 artifacts:
   files:
-    - target/getCustomerInfo-1.0-SNAPSHOT-shaded.jar
+    - target/getCustomerInfo-1.0-SNAPSHOT.jar
   discard-paths: yes
