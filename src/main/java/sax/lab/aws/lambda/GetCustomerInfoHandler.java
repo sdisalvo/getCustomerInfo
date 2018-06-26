@@ -37,7 +37,7 @@ public class GetCustomerInfoHandler
             "{"+
                 "\"isBase64Encoded\": false," +
                 "\"statusCode\": 200," +
-                "\"body\": \"";
+                "\"body\": ";
 
             outputStream.write( wrap.getBytes() );
             byte[] read_buf = new byte[1024];
@@ -47,7 +47,7 @@ public class GetCustomerInfoHandler
             }
             s3is.close();
 
-            outputStream.write( "\" }".getBytes() );
+            outputStream.write( " }".getBytes() );
 
 
         }
