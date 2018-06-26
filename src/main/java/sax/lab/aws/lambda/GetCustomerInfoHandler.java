@@ -33,11 +33,22 @@ public class GetCustomerInfoHandler
             S3Object o = s3.getObject( "ci-storedemo", "sample.json" );
             S3ObjectInputStream s3is = o.getObjectContent();
 
+            String wrap =
+            "{"+
+                "\"isBase64Encoded\": false," +
+                "\"statusCode\": 200," +
+                "\"body\": \"";
+
+            outputStream.write( wrap.getBytes() );
             byte[] read_buf = new byte[1024];
             int read_len = 0;
             while ((read_len = s3is.read(read_buf)) > 0) {
                 outputStream.write(read_buf, 0, read_len);
             }
             s3is.close();
+
+            outputStream.write( "\" }".getBytes() );
+
+
         }
 }
