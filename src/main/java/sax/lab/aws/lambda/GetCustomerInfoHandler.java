@@ -30,14 +30,7 @@ public class GetCustomerInfoHandler
                     .withRegion("us-east-2")
                     .build();
 
-            List<Bucket> buckets = s3.listBuckets();
-            for (Bucket b : buckets) {
-                outputStream.write( ("* " + b.getName()).getBytes() );
-
-            }
-            outputStream.write( " bitter pill ".getBytes() );
-
-            S3Object o = s3.getObject( "sax-image-reko", "GetCustomerInfoHandler.java" );
+            S3Object o = s3.getObject( "ci-storedemo", "sample.json" );
             S3ObjectInputStream s3is = o.getObjectContent();
 
             byte[] read_buf = new byte[1024];
