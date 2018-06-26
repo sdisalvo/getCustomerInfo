@@ -7,8 +7,8 @@ phases:
   post_build:
     commands:
       - ls target
-      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file outputSamTemplate.yaml
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file
 artifacts:
   files:
-    - target/getCustomerInfo-1.0-SNAPSHOT.jar
+    - outputSamTemplate.yaml
   discard-paths: yes
