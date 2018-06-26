@@ -4,17 +4,31 @@ package sax.lab.aws.lambda;
  * Created by SalvatoreAngelo.DiSa on 26/06/2018.
  */
 public class Response {
-    private String message;
+    private String body;
+    private boolean isBase64Encoded;
+    private int statusCode;
 
-    Response( String message ) {
-        this.message = message;
+    public String getBody() {
+        return body;
     }
 
-    public String getMessage() {
-        return message;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public boolean isBase64Encoded() {
+        return isBase64Encoded;
+    }
+
+    public void setBase64Encoded(boolean base64Encoded) {
+        isBase64Encoded = base64Encoded;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 }
