@@ -1,14 +1,16 @@
 version: 0.1
 phases:
+  install:
+    commands:
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file outputSamTemplate.yaml
   build:
     commands:
       - echo Build started on `date`
       - mvn clean package
   post_build:
     commands:
-      - ls
+      - ls target
 artifacts:
   files:
-    - samTemplate.yaml
     - target/getCustomerInfo-1.0-SNAPSHOT.jar
   discard-paths: yes
