@@ -7,7 +7,7 @@ phases:
   post_build:
     commands:
       - ls target
-      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket sax-deploy --output-template-file outputSamTemplate.yaml
 artifacts:
   files:
     - outputSamTemplate.yaml
