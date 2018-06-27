@@ -30,7 +30,9 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         context.getLogger().log( "Customer input filter: " + customer.toString());
 
         Response response = new Response();
-        response.setItems( readFromDynamoDB( customer ));
+        Body respBody = new Body();
+        respBody.setCustomer(readFromDynamoDB( customer ));
+        response.setBody( respBody );
         response.setBase64Encoded( false );
         response.setStatusCode( 200 );
 
