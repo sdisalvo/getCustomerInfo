@@ -4,7 +4,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.*;
-import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -25,17 +25,28 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class GetCustomerInfoHandler implements RequestHandler<Request, Response> {
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
-        QuerySpec spec = new QuerySpec();
         Customer customer = gatewayRequest.getCustomer();
 
+        context.getLogger().log( "Customer input filter: " + customer.toString());
+
+        Response response = new Response();
+        response.setItems( readFromDynamoDB( customer ));
+        response.setBase64Encoded( false );
+        response.setStatusCode( 200 );
+
+        return response;
+    }
+
+    public Customer[] readFromDynamoDB( Customer customer ) {
+        ScanSpec spec = new ScanSpec();
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.US_WEST_1).build();
+                .withRegion(Regions.EU_WEST_1).build();
         DynamoDB dynamoDB = new DynamoDB(client);
 
         Table table = dynamoDB.getTable("Customer");
 
         if( customer.getCustomerId() != null )
-            spec.withKeyConditionExpression("customerId = :id")
+            spec.withFilterExpression("customerId = :id")
                     .withValueMap( new ValueMap().withString(":id", customer.getCustomerId()));
 
         if( customer.getCognome() != null )
@@ -50,7 +61,7 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
             spec.withProjectionExpression( customer.getProjectExpession() );
 
         LinkedList<Customer> customers = new LinkedList<Customer>();
-        ItemCollection<QueryOutcome> items = table.query(spec);
+        ItemCollection<ScanOutcome> items = table.scan( spec );
         Iterator<Item> iterator = items.iterator();
         Item item = null;
         while (iterator.hasNext()) {
@@ -64,16 +75,10 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
             customers.add( c );
         }
 
-        Response response = new Response();
-        response.setItems( customers.toArray( new Customer[customers.size()]) );
-        response.setBase64Encoded( false );
-        response.setStatusCode( 200 );
-
-        return response;
+        return customers.toArray( new Customer[customers.size()]);
     }
 
-
-    private String readFromS3( Context context ) {
+    protected String readFromS3( Context context ) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion("us-east-2")
                 .build();
