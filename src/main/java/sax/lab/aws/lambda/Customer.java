@@ -59,4 +59,10 @@ public class Customer {
     public void setProjectExpession(String projectExpession) {
         this.projectExpession = projectExpession;
     }
+
+    @Override
+    public String toString() {
+        return  "customerId: " + customerId + " cognome: " + cognome + " nome: " + nome + " numeroCivico: "
+                + numeroCivico + " via: " + via + " projectExpession: " + projectExpession;
+    }
 }
