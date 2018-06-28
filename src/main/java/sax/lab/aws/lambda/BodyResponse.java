@@ -3,7 +3,7 @@ package sax.lab.aws.lambda;
 /**
  * Created by SalvatoreAngelo.DiSa on 27/06/2018.
  */
-public class Body {
+public class BodyResponse {
 
     private Customer[] customer;
 

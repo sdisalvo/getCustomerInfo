@@ -5,7 +5,7 @@ package sax.lab.aws.lambda;
  */
 public class Response {
 
-    private Body body;
+    private BodyResponse body;
     private boolean isBase64Encoded = false;
     private int statusCode = 200;
 
@@ -25,11 +25,11 @@ public class Response {
         this.statusCode = statusCode;
     }
 
-    public Body getBody() {
+    public BodyResponse getBody() {
         return body;
     }
 
-    public void setBody(Body body) {
+    public void setBody(BodyResponse body) {
         this.body = body;
     }
 }

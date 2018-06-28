@@ -25,13 +25,13 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class GetCustomerInfoHandler implements RequestHandler<Request, Response> {
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
-        Customer customer = gatewayRequest.getCustomer();
+        Customer customer = gatewayRequest.getBody().getCustomer();
 
         context.getLogger().log( "Customer input filter: " + customer.toString());
 
         Response response = new Response();
-        Body respBody = new Body();
-        respBody.setCustomer(readFromDynamoDB( customer ));
+        BodyResponse respBody = new BodyResponse();
+        respBody.setCustomer( readFromDynamoDB( customer ) );
         response.setBody( respBody );
         response.setBase64Encoded( false );
         response.setStatusCode( 200 );
