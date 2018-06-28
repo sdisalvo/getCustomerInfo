@@ -28,10 +28,11 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
         Response response = new Response();
+        ObjectMapper mapper = new ObjectMapper();
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            Customer inCustomer = gatewayRequest.getCustomer();
+            Customer inCustomer = BodyRequest.createBodyRequest( gatewayRequest.getBody() ).getCustomer();
+
             context.getLogger().log( "Customer input filter: " + inCustomer.toString());
 
             Customer[] customers = readFromDynamoDB( inCustomer );
@@ -40,9 +41,10 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
             response.setBase64Encoded( false );
             response.setStatusCode( 200 );
 
-        } catch (JsonProcessingException e) {
-            context.getLogger().log( "Json exception: " + e );
+        } catch (Exception e) {
+            context.getLogger().log( "Parsin exception: " + e );
         }
+
         return response;
     }
 
