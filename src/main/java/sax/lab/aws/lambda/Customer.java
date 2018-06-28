@@ -1,5 +1,9 @@
 package sax.lab.aws.lambda;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 /**
  * Created by SalvatoreAngelo.DiSa on 27/06/2018.
  */

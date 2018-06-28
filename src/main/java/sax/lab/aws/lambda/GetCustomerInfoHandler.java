@@ -17,6 +17,8 @@ import java.util.LinkedList;
 
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -26,16 +28,21 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
         Customer customer = new BodyRequest( gatewayRequest.getBody() ).getCustomer();
-
-        context.getLogger().log( "Customer input filter: " + customer.toString());
-
         Response response = new Response();
-        BodyResponse respBody = new BodyResponse();
-        respBody.setCustomer( readFromDynamoDB( customer ) );
-        response.setBody( respBody );
-        response.setBase64Encoded( false );
-        response.setStatusCode( 200 );
 
+        try {
+            context.getLogger().log( "Customer input filter: " + customer.toString());
+
+            Customer[] customers = readFromDynamoDB( customer );
+            ObjectMapper mapper = new ObjectMapper();
+            String json =  mapper.writeValueAsString( customers );
+            response.setBody( json );
+            response.setBase64Encoded( false );
+            response.setStatusCode( 200 );
+
+        } catch (JsonProcessingException e) {
+            context.getLogger().log( "Json exception: " + e );
+        }
         return response;
     }
 

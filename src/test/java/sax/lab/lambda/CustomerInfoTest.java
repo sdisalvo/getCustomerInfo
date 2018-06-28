@@ -1,5 +1,7 @@
 package sax.lab.lambda;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.*;
 
 import sax.lab.aws.lambda.BodyRequest;
@@ -15,28 +17,26 @@ public class CustomerInfoTest {
     public void testSearchByName() {
         GetCustomerInfoHandler handler = new GetCustomerInfoHandler();
 
-        Customer filter = new Customer();
-        filter.setNome( "Marco" );
-        Customer[] customers = handler.readFromDynamoDB( filter );
+        try {
+            Customer filter = new Customer();
+            filter.setNome( "Marco" );
+            Customer[] customers = handler.readFromDynamoDB( filter );
 
-        for( Customer c: customers ) {
-            System.out.println( c.toString() );
+            for( Customer c: customers ) {
+                System.out.println( c.toString() );
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json =  mapper.writeValueAsString( customers );
+
+            System.out.println( "Json : " + json );
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
     }
 
-    @Test
-    public void testParseJSon() {
-        BodyRequest br = new BodyRequest( "{\n" +
-                "    \"customer\" :  {\n" +
-                "        \"customerId\" : \"1\"\n" +
-                "    }\n" +
-                "}");
-
-        System.out.println( br.getCustomer().toString() );
-
-    }
-
     public static void main( String[] args) {
-        new CustomerInfoTest().testParseJSon();
+        new CustomerInfoTest().testSearchByName();
     }
 }
