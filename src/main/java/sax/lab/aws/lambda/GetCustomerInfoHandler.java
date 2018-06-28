@@ -27,14 +27,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class GetCustomerInfoHandler implements RequestHandler<Request, Response> {
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
-        Customer customer = new BodyRequest( gatewayRequest.getBody() ).getCustomer();
         Response response = new Response();
 
         try {
-            context.getLogger().log( "Customer input filter: " + customer.toString());
-
-            Customer[] customers = readFromDynamoDB( customer );
             ObjectMapper mapper = new ObjectMapper();
+            Customer inCustomer = mapper.readValue( gatewayRequest.getBody(), Customer.class );
+
+            context.getLogger().log( "Customer input filter: " + inCustomer.toString());
+
+            Customer[] customers = readFromDynamoDB( inCustomer );
             String json =  mapper.writeValueAsString( customers );
             response.setBody( json );
             response.setBase64Encoded( false );
@@ -42,6 +43,8 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
         } catch (JsonProcessingException e) {
             context.getLogger().log( "Json exception: " + e );
+        } catch ( IOException x) {
+            context.getLogger().log( "Read Json request: " + x );
         }
         return response;
     }
@@ -87,7 +90,10 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         return customers.toArray( new Customer[customers.size()]);
     }
 
-    protected String readFromS3( Context context ) {
+    /*
+        Sample of reading form S3. Not used
+     */
+    private String readFromS3( Context context ) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
                 .withRegion("us-east-2")
                 .build();

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.*;
 
-import sax.lab.aws.lambda.BodyRequest;
 import sax.lab.aws.lambda.Customer;
 import sax.lab.aws.lambda.GetCustomerInfoHandler;
 
