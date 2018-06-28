@@ -25,7 +25,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class GetCustomerInfoHandler implements RequestHandler<Request, Response> {
 
     public Response handleRequest( Request gatewayRequest, Context context)  {
-        Customer customer = gatewayRequest.getBody().getCustomer();
+        Customer customer = new BodyRequest( gatewayRequest.getBody() ).getCustomer();
 
         context.getLogger().log( "Customer input filter: " + customer.toString());
 
