@@ -2,6 +2,7 @@ package sax.lab.lambda;
 
 import org.junit.*;
 
+import sax.lab.aws.lambda.BodyRequest;
 import sax.lab.aws.lambda.Customer;
 import sax.lab.aws.lambda.GetCustomerInfoHandler;
 
@@ -21,5 +22,21 @@ public class CustomerInfoTest {
         for( Customer c: customers ) {
             System.out.println( c.toString() );
         }
+    }
+
+    @Test
+    public void testParseJSon() {
+        BodyRequest br = new BodyRequest( "{\n" +
+                "    \"customer\" :  {\n" +
+                "        \"customerId\" : \"1\"\n" +
+                "    }\n" +
+                "}");
+
+        System.out.println( br.getCustomer().toString() );
+
+    }
+
+    public static void main( String[] args) {
+        new CustomerInfoTest().testParseJSon();
     }
 }
