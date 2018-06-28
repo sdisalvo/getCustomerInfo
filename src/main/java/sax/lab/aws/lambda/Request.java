@@ -5,13 +5,14 @@ package sax.lab.aws.lambda;
  */
 public class Request {
 
-    private String body;
+    private Customer customer;
 
-    public String getBody() {
-        return body;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
+
 }

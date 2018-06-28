@@ -31,8 +31,7 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Customer inCustomer = mapper.readValue( gatewayRequest.getBody(), Customer.class );
-
+            Customer inCustomer = gatewayRequest.getCustomer();
             context.getLogger().log( "Customer input filter: " + inCustomer.toString());
 
             Customer[] customers = readFromDynamoDB( inCustomer );
@@ -43,8 +42,6 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
         } catch (JsonProcessingException e) {
             context.getLogger().log( "Json exception: " + e );
-        } catch ( IOException x) {
-            context.getLogger().log( "Read Json request: " + x );
         }
         return response;
     }
