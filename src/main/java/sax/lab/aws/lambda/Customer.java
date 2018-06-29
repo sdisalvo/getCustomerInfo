@@ -14,7 +14,6 @@ public class Customer {
     private String nome;
     private String numeroCivico;
     private String via;
-    private String projectExpession;
 
     public String getCustomerId() {
         return customerId;
@@ -56,17 +55,9 @@ public class Customer {
         this.via = via;
     }
 
-    public String getProjectExpession() {
-        return projectExpession;
-    }
-
-    public void setProjectExpession(String projectExpession) {
-        this.projectExpession = projectExpession;
-    }
-
     @Override
     public String toString() {
         return  "customerId: " + customerId + " cognome: " + cognome + " nome: " + nome + " numeroCivico: "
-                + numeroCivico + " via: " + via + " projectExpession: " + projectExpession;
+                + numeroCivico + " via: " + via;
     }
 }

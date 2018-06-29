@@ -13,7 +13,7 @@ public class BodyRequest {
 
     public BodyRequest(){}
 
-    public static BodyRequest createBodyRequest( String json ) throws IOException {
+    public static BodyRequest createFromJson(String json ) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, BodyRequest.class);
     }

@@ -30,7 +30,7 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            Customer inCustomer = BodyRequest.createBodyRequest( gatewayRequest.getBody() ).getCustomer();
+            Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
 
             context.getLogger().log( "Customer input filter: " + inCustomer.toString());
 
@@ -66,9 +66,6 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         if( customer.getNome() != null )
             spec.withFilterExpression( "nome = :nome" )
                     .withValueMap( new ValueMap().withString( ":nome", customer.getNome()));
-
-        if( customer.getProjectExpession() != null )
-            spec.withProjectionExpression( customer.getProjectExpession() );
 
         LinkedList<Customer> customers = new LinkedList<Customer>();
         ItemCollection<ScanOutcome> items = table.scan( spec );
