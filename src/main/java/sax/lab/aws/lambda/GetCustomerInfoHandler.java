@@ -17,7 +17,6 @@ import java.util.LinkedList;
 
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -42,7 +41,7 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
             response.setStatusCode( 200 );
 
         } catch (Exception e) {
-            context.getLogger().log( "Parsin exception: " + e );
+            context.getLogger().log( "Parsing exception: " + e );
         }
 
         return response;
@@ -51,7 +50,7 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
     public Customer[] readFromDynamoDB( Customer customer ) {
         ScanSpec spec = new ScanSpec();
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.EU_WEST_1).build();
+                                    .withRegion(Regions.EU_WEST_1).build();
         DynamoDB dynamoDB = new DynamoDB(client);
 
         Table table = dynamoDB.getTable("Customer");
