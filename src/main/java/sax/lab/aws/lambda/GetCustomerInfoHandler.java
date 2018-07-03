@@ -25,6 +25,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class GetCustomerInfoHandler implements RequestHandler<Request, Response> {
 
+    private static DynamoDB dynamoDB = null;
+
+    static {
+        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
+                .withRegion(Regions.EU_WEST_1).build();
+        dynamoDB = new DynamoDB(client);
+    }
+
     public Response handleRequest( Request gatewayRequest, Context context)  {
         Response response = new Response();
         ObjectMapper mapper = new ObjectMapper();
@@ -48,13 +56,10 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
     }
 
     public Customer[] readFromDynamoDB( Customer customer ) {
-        ScanSpec spec = new ScanSpec();
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
-                                    .withRegion(Regions.EU_WEST_1).build();
-        DynamoDB dynamoDB = new DynamoDB(client);
 
         Table table = dynamoDB.getTable("Customer");
 
+        ScanSpec spec = new ScanSpec();
         if( customer.getCustomerId() != null )
             spec.withFilterExpression("customerId = :id")
                     .withValueMap( new ValueMap().withString(":id", customer.getCustomerId()));
