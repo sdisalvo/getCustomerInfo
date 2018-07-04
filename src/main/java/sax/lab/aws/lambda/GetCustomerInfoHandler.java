@@ -42,15 +42,15 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         try {
             //Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
             Customer inCustomer = gatewayRequest.getCustomer();
-
             context.getLogger().log( "Customer input filter: " + inCustomer.toString());
+            response.setCustomers( readFromDynamoDB( inCustomer ) );
 
-            Customer[] customers = readFromDynamoDB( inCustomer );
-            String json =  mapper.writeValueAsString( customers );
+            /*String json =  mapper.writeValueAsString( customers );
             response.setBody( json );
             response.setBase64Encoded( false );
             response.setStatusCode( 200 );
-
+            */
+            
         } catch (Exception e) {
             context.getLogger().log( "Parsing exception: " + e );
         }

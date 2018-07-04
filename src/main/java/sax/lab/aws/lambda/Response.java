@@ -5,7 +5,17 @@ package sax.lab.aws.lambda;
  */
 public class Response {
 
-    private String body;
+    private Customer[] customers;
+
+    public Customer[] getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customer[] customers) {
+        this.customers = customers;
+    }
+
+    /*private String body;
     private boolean isBase64Encoded = false;
     private int statusCode = 200;
 
@@ -31,5 +41,5 @@ public class Response {
 
     public void setBody(String body) {
         this.body = body;
-    }
+    }*/
 }
