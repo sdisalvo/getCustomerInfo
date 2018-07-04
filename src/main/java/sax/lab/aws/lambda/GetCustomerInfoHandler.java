@@ -40,7 +40,8 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         context.getLogger().log( "Input request: " + gatewayRequest );
 
         try {
-            Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
+            //Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
+            Customer inCustomer = gatewayRequest.getCustomer();
 
             context.getLogger().log( "Customer input filter: " + inCustomer.toString());
 
