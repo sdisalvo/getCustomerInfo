@@ -26,6 +26,4 @@ public class BodyRequest {
         this.customer = customer;
     }
 
-
-
 }

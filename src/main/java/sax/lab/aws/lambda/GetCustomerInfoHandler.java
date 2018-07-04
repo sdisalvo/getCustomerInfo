@@ -39,21 +39,9 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
         context.getLogger().log( "Input request: " + gatewayRequest );
 
-        try {
-            //Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
-            Customer inCustomer = gatewayRequest.getCustomer();
-            context.getLogger().log( "Customer input filter: " + inCustomer.toString());
-            response.setCustomers( readFromDynamoDB( inCustomer ) );
-
-            /*String json =  mapper.writeValueAsString( customers );
-            response.setBody( json );
-            response.setBase64Encoded( false );
-            response.setStatusCode( 200 );
-            */
-            
-        } catch (Exception e) {
-            context.getLogger().log( "Parsing exception: " + e );
-        }
+        Customer inCustomer = gatewayRequest.getCustomer();
+        context.getLogger().log( "Customer input filter: " + inCustomer.toString());
+        response.setCustomers( readFromDynamoDB( inCustomer ) );
 
         return response;
     }
