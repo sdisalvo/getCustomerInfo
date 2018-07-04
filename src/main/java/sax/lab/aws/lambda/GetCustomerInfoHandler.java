@@ -37,6 +37,8 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
         Response response = new Response();
         ObjectMapper mapper = new ObjectMapper();
 
+        context.getLogger().log( "Input request: " + gatewayRequest );
+
         try {
             Customer inCustomer = BodyRequest.createFromJson( gatewayRequest.getBody() ).getCustomer();
 
