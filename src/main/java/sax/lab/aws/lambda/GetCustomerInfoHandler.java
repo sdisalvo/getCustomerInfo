@@ -50,16 +50,17 @@ public class GetCustomerInfoHandler implements RequestHandler<Request, Response>
 
         Table table = dynamoDB.getTable("Customer");
 
+
         ScanSpec spec = new ScanSpec();
-        if( customer.getCustomerId() != null )
+        if( customer.getCustomerId() != null && customer.getCustomerId().isEmpty() == false)
             spec.withFilterExpression("customerId = :id")
                     .withValueMap( new ValueMap().withString(":id", customer.getCustomerId()));
 
-        if( customer.getCognome() != null )
+        if( customer.getCognome() != null && customer.getCognome().isEmpty() == false )
             spec.withFilterExpression( "cognome = :cognome" )
                     .withValueMap( new ValueMap().withString( ":cognome", customer.getCognome()));
 
-        if( customer.getNome() != null )
+        if( customer.getNome() != null && customer.getNome().isEmpty() == false )
             spec.withFilterExpression( "nome = :nome" )
                     .withValueMap( new ValueMap().withString( ":nome", customer.getNome()));
 

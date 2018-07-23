@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.275.1.min.js"></script>
+    <script>
+        var GoogleAuth;
+        var SCOPE = 'email profile';
+        function handleClientLoad() {
+            // Load the API's client and auth2 modules.
+            // Call the initClient function after the modules load.
+            gapi.load('client:auth2', initClient);
+        }
+
+        function initClient() {
+            // Retrieve the discovery document for version 3 of Google Drive API.
+            // In practice, your app can retrieve one or more discovery documents.
+            var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+
+            // Initialize the gapi.client object, which app uses to make API requests.
+            // Get API key and client ID from API Console.
+            // 'scope' field specifies space-delimited list of access scopes.
+            gapi.client.init({
+                'apiKey': 'AIzaSyB966ZrrLroBnR6LIz9WbOONWRWWoIKTzI',
+                //'discoveryDocs': [discoveryUrl],
+                'clientId': '105248247635-ag3j6qvnknpsmo8a44kr0ffvfkr5q4ph.apps.googleusercontent.com',
+                'scope': SCOPE
+            }).then(function () {
+                GoogleAuth = gapi.auth2.getAuthInstance();
+
+                // Listen for sign-in state changes.
+                GoogleAuth.isSignedIn.listen(updateSigninStatus);
+
+                // Handle initial sign-in state. (Determine if user is already signed in.)
+                setSigninStatus();
+
+                // Call handleAuthClick function when user clicks on
+                //      "Sign In/Authorize" button.
+                $('#sign-in-or-out-button').click(function () {
+                    handleAuthClick();
+                });
+                $('#revoke-access-button').click(function () {
+                    revokeAccess();
+                });
+                $('#call-api-button').click(function () {
+                    callAWSAPI();
+                });
+            });
+        }
+
+        function callAWSAPI() {
+            var user = GoogleAuth.currentUser.get();
+            var isAuthorized = user.hasGrantedScopes(SCOPE);
+
+            if (isAuthorized) {
+                // Initialize the Amazon Cognito credentials provider
+                AWS.config.region = 'eu-west-1'; // Region
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: 'eu-west-1:53583a54-5f35-4c13-ad15-9f3f043938ea',
+                    Logins: {
+                        'accounts.google.com': user.getAuthResponse().id_token
+                    }
+                });
+
+                var lambda = new AWS.Lambda({ region: 'eu-west-1' });
+                var pullParams = {
+                    FunctionName: 'ci-stack-getCustomerInfo-X6CV8TRD0YAB',
+                    InvocationType: 'RequestResponse',
+                    LogType: 'None',
+                    Payload: '{ "customer": { "customerId": "2" } }'
+                };
+                // Call the Lambda function to collect the spin results
+                lambda.invoke(pullParams,
+                    function (err, data) {
+                        if (err) {
+                            $('#result').html("Error: " + err);
+                        } else {
+                            $('#result').html(data.Payload);
+                        }
+                    });
+                $('#result').html("In progess");
+            } else {
+                $('#result').html("Not logged !!!");
+            }
+        }
+
+        function handleAuthClick() {
+            if (GoogleAuth.isSignedIn.get()) {
+                // User is authorized and has clicked 'Sign out' button.
+                GoogleAuth.signOut();
+            } else {
+                // User is not signed in. Start Google auth flow.
+                GoogleAuth.signIn();
+            }
+        }
+
+        function revokeAccess() {
+            GoogleAuth.disconnect();
+        }
+
+        function setSigninStatus(isSignedIn) {
+            var user = GoogleAuth.currentUser.get();
+            var isAuthorized = user.hasGrantedScopes(SCOPE);
+            if (isAuthorized) {
+                $('#sign-in-or-out-button').html('Sign out');
+                $('#revoke-access-button').css('display', 'inline-block');
+                $('#call-api-button').css('display', 'inline-block');
+                $('#auth-status').html('You are currently signed. Token: ' + user.getAuthResponse().id_token);
+            } else {
+                $('#sign-in-or-out-button').html('Sign In/Authorize');
+                $('#revoke-access-button').css('display', 'none');
+                $('#auth-status').html('You have not authorized this app or you are signed out.');
+            }
+        }
+
+        function updateSigninStatus(isSignedIn) {
+            setSigninStatus();
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</head>
+<body>
+    <button id="sign-in-or-out-button" style="margin-left: 25px">Sign In/Authorize</button>
+    <button id="revoke-access-button" style="display: none; margin-left: 25px">Revoke access</button>
+    <button id="call-api-button" style="display: none; margin-left: 25px">Call API</button>
+
+    <div id="auth-status" style="display: inline; padding-left: 25px"></div>
+    <div id="result" style="display: inline; padding-left: 25px"></div>
+</body>
+</html>
